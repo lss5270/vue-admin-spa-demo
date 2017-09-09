@@ -1,4 +1,4 @@
-webpackJsonp([18],Array(18).concat([
+webpackJsonp([21],Array(18).concat([
 /* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6,7 +6,7 @@ webpackJsonp([18],Array(18).concat([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return global; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(231);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_element_ui__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_js_cookie__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_js_cookie___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_js_cookie__);
@@ -712,6 +712,10 @@ var Mixin = _import('example/mixin');
 
 var PermissionsManage = _import('systemSet/permissionsManage');
 
+var StudentList = _import('student/studentList');
+var StudentAdd = _import('student/studentAdd');
+var StudentUpdate = _import('student/studentUpdate');
+
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 var constantRouterMap = [{ path: '/login', component: Login, hidden: true }, { path: '/authredirect', component: authRedirect, hidden: true }, { path: '/sendpwd', component: sendPWD, hidden: true }, { path: '/reset', component: reset, hidden: true }, { path: '/404', component: Err404, hidden: true }, { path: '/401', component: Err401, hidden: true }, {
@@ -775,6 +779,13 @@ var constantRouterMap = [{ path: '/login', component: Login, hidden: true }, { p
   name: '系统设置',
 
   children: [{ path: 'permissionsManage', component: PermissionsManage, name: '权限管理' }]
+}, {
+  path: '/studentsManage',
+  component: __WEBPACK_IMPORTED_MODULE_2__views_layout_Layout___default.a,
+  redirect: 'noredirect',
+  name: '学生管理',
+
+  children: [{ path: 'studentList', component: StudentList, name: '学生列表' }, { path: 'studentAdd', component: StudentAdd, name: '学生添加' }, { path: 'studentUpdate', component: StudentUpdate, name: '学生修改' }]
 }, {
   path: '/example',
   component: __WEBPACK_IMPORTED_MODULE_2__views_layout_Layout___default.a,
@@ -850,27 +861,34 @@ module.exports = Component.exports
 var config = __webpack_require__(55);
 
 var url = {
-    apiUrl: "/ccp-web/api",
-    ctxPath: "/dist",
-    staticPath:  true ? config.build.staticPath : config.dev.staticPath
+            apiUrl: "/ccp-web/api",
+            ctxPath: "/dist",
+            staticPath:  true ? config.build.staticPath : config.dev.staticPath
 };
 
-var api = {
-    'login': url.staticPath + '/dataJson/login.json',
-    'getUserInfo': url.staticPath + '/dataJson/userInfo.json',
-    'tableList': url.staticPath + '/dataJson/tableList.json',
-    'getForm': url.staticPath + '/dataJson/form.json',
-    "roleAndUser": url.staticPath + "/dataJson/roleAndUser.json",
-    "getMenuAndElement": url.staticPath + "/dataJson/getMenuAndElement.json",
-    "in_theaters": "/v2/movie/in_theaters",
-    "movieSearch": "/v2/movie/search",
+var nodeApiBaseUrl = 'http://localhost:3000';
 
-    '0': url.apiUrl + '',
-    '1': url.apiUrl + '',
-    '2': {
-        '1': null,
-        '2': null
-    }
+var api = {
+            'login': url.staticPath + '/dataJson/login.json',
+            'getUserInfo': url.staticPath + '/dataJson/userInfo.json',
+            'tableList': url.staticPath + '/dataJson/tableList.json',
+            'getForm': url.staticPath + '/dataJson/form.json',
+            "roleAndUser": url.staticPath + "/dataJson/roleAndUser.json",
+            "getMenuAndElement": url.staticPath + "/dataJson/getMenuAndElement.json",
+            "in_theaters": "/v2/movie/in_theaters",
+            "movieSearch": "/v2/movie/search",
+            "addStudents": nodeApiBaseUrl + "/api/addStudents",
+            "studentUpdate": nodeApiBaseUrl + "/api/studentUpdate",
+            "studentList": nodeApiBaseUrl + "/api/queryStudents",
+            "delStudents": nodeApiBaseUrl + "/api/delStudents",
+            "queryStudentsItem": nodeApiBaseUrl + "/api/queryStudentsItem",
+
+            '0': url.apiUrl + '',
+            '1': url.apiUrl + '',
+            '2': {
+                        '1': null,
+                        '2': null
+            }
 };
 
 /***/ }),
@@ -1324,7 +1342,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__App__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_ui__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_theme_default_index_css__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_theme_default_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_element_ui_lib_theme_default_index_css__);
@@ -1598,7 +1616,7 @@ var permission = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_js_cookie___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_js_cookie__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_src_global_global__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_src_global_api__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_ui__);
 
 
@@ -2525,7 +2543,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "index": "/systemSet/loginLog"
     }
-  }, [_vm._v("\n                        登录日志\n                    ")])], 1) : _vm._e()], 2) : _vm._e()] : _vm._e()], 2)
+  }, [_vm._v("\n                        登录日志\n                    ")])], 1) : _vm._e()], 2) : _vm._e(), _vm._v(" "), _c('el-submenu', {
+    attrs: {
+      "index": "学生信息管理"
+    }
+  }, [_c('template', {
+    slot: "title"
+  }, [_c('i', {
+    staticClass: "fa fa-cogs fa-fw",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" 学生信息管理\n            ")]), _vm._v(" "), _c('router-link', {
+    staticClass: "menu-indent",
+    attrs: {
+      "to": "/studentsManage/studentList"
+    }
+  }, [_c('el-menu-item', {
+    attrs: {
+      "index": "/studentsManage/studentList"
+    }
+  }, [_vm._v("\n                        学生信息列表\n                    ")])], 1), _vm._v(" "), _c('router-link', {
+    staticClass: "menu-indent",
+    attrs: {
+      "to": "/studentsManage/studentAdd"
+    }
+  }, [_c('el-menu-item', {
+    attrs: {
+      "index": "/studentsManage/studentAdd"
+    }
+  }, [_vm._v("\n                        学生信息添加\n                    ")])], 1), _vm._v(" "), _c('router-link', {
+    staticClass: "menu-indent",
+    attrs: {
+      "to": "/studentsManage/studentUpdate"
+    }
+  }, [_c('el-menu-item', {
+    attrs: {
+      "index": "/studentsManage/studentUpdate"
+    }
+  }, [_vm._v("\n                        学生信息修改\n                    ")])], 1)], 2)] : _vm._e()], 2)
 },staticRenderFns: []}
 
 /***/ }),
@@ -2538,11 +2594,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 var map = {
 	"./ErrLog/index.vue": [
 		238,
-		11
+		13
 	],
 	"./Screenfull/index.vue": [
 		239,
-		10
+		12
 	],
 	"./error/401.vue": [
 		240,
@@ -2554,15 +2610,15 @@ var map = {
 	],
 	"./example/form.vue": [
 		242,
-		9
+		11
 	],
 	"./example/mixin.vue": [
 		243,
-		8
+		10
 	],
 	"./example/tableList.vue": [
 		244,
-		15
+		18
 	],
 	"./example/tinymce.vue": [
 		245,
@@ -2574,7 +2630,7 @@ var map = {
 	],
 	"./index/readme.vue": [
 		247,
-		7
+		9
 	],
 	"./layout/AppMain.vue": [
 		81
@@ -2599,7 +2655,7 @@ var map = {
 	],
 	"./login/authredirect.vue": [
 		248,
-		16
+		19
 	],
 	"./login/index.vue": [
 		249,
@@ -2615,15 +2671,27 @@ var map = {
 	],
 	"./movie/movieSearch.vue": [
 		252,
-		14
+		17
 	],
 	"./movie/newMovie.vue": [
 		253,
-		13
+		16
+	],
+	"./student/studentAdd.vue": [
+		254,
+		8
+	],
+	"./student/studentList.vue": [
+		255,
+		15
+	],
+	"./student/studentUpdate.vue": [
+		256,
+		7
 	],
 	"./systemSet/permissionsManage.vue": [
-		254,
-		12
+		257,
+		14
 	]
 };
 function webpackAsyncContext(req) {
